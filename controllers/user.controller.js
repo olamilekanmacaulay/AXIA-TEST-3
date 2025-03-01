@@ -1,6 +1,6 @@
-const userModel = require("../models/users.model");
+const userModel = require("../models/user.model");
 const kycModel = require("../models/kyc.model");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
         
@@ -82,4 +82,11 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).send("something went wrong")
     }
+};
+
+module.exports = {
+    createUser,
+    loginUser,
+    createKyc,
+    deleteUser
 };

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "keywords": [
     "user",
@@ -14,9 +14,9 @@
   ],
   "author": "Olalekan Macaulay",
   "license": "ISC",
-  "description": " A To-Do application that has both Users and Tasks, where the user has to be auntheticated.",
+  "description": " ",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

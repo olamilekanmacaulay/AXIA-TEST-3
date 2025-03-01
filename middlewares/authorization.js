@@ -9,7 +9,7 @@ const authorization = (req, res, next) => {
       .json({ message: "You are not authorized to access this route" });
   }
 
-  jwt.verify(token, "OlalekanTODO", (err, payload) => {
+  jwt.verify(token, process.env.JWT_PASSWORD, (err, payload) => {
     if (err) {
       return res.status(401).json({ message: "wrong jwt" });
     }

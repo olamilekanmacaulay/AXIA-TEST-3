@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 
 const userSchema = new mongoose.Schema(
     {
@@ -39,10 +39,20 @@ userSchema.pre("save", async function (next) {
     next();
 });
 
-userSchema.post("findOneAndDelete", async function (doc, next) {
-    const kycModel = mongoose.model("kyc");
-    await kycModel.findByIdAndDelete(doc.kyc);
-    console.log("Kyc has been deleted successfully")
+
+
+userSchema.post("findOneAndDelete", async function (doc) {
+    if (doc && doc.kyc) { // Check if doc and doc.kyc exist
+        try {
+            const kycModel = mongoose.model("Kyc");
+            await kycModel.findByIdAndDelete(doc.kyc);
+            console.log(`KYC for user ${doc.name} has been deleted successfully.`);
+        } catch (error) {
+            console.error(`Error deleting KYC for user ${doc.name}:`, error);
+        }
+    } else {
+        console.log("No KYC associated with this user or user not found.");
+    }
 });
     
 const userModel = mongoose.model("User", userSchema);

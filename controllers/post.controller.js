@@ -23,3 +23,7 @@ const createPost = async (req, res) => {
     res.send("something went wrong");
   }
 };
+
+module.exports = {
+  createPost
+};
