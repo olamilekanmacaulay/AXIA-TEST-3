@@ -42,16 +42,21 @@ userSchema.pre("save", async function (next) {
 
 
 userSchema.post("findOneAndDelete", async function (doc) {
-    if (doc && doc.kyc) { // Check if doc and doc.kyc exist
+    if (doc) { // Check if doc exist
         try {
-            const kycModel = mongoose.model("Kyc");
-            await kycModel.findByIdAndDelete(doc.kyc);
-            console.log(`KYC for user ${doc.name} has been deleted successfully.`);
-        } catch (error) {
-            console.error(`Error deleting KYC for user ${doc.name}:`, error);
+            if (doc.kyc) {
+                const kycModel = mongoose.model("Kyc");
+                await kycModel.findByIdAndDelete(doc.kyc);
+                console.log(`KYC for user ${doc.name} has been deleted successfully.`);
+            }
+
+            await Post.deleteMany({ userId: doc._id });
+            console.log(`All posts for user ${doc._id} have been deleted.`);
+        }   catch (error) {
+            console.log(`Error deleting associated documents for user ${doc._id}`);
         }
     } else {
-        console.log("No KYC associated with this user or user not found.");
+        console.log("User not found or already deleted");
     }
 });
     
